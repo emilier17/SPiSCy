@@ -180,7 +180,7 @@ docker build -f docker/Dockerfile_pybase -t spiscy_pybase:1.0 .
 
 Each rule has its own configuration file that should be customized. Each configuration file has extensive comments to help inform choices. The settings are spoken about in detail in the [video](placeholder). 
 
-[!IMPORTANT]
+> [!IMPORTANT]
 > If using control files, make sure each control file has an identifying word in their filenames. Then make sure to write that control ID in ```config/normalization.yaml```. This setting allows to distinguish between sample and control files. 
 
 
