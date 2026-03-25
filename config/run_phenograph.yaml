@@ -1,0 +1,9 @@
+sample_size_per_file: 10000 # how many cells from each file should be sampled to create a dataset on which to run phenograph
+
+k : 30 # number of nearest neighbors. Generally, smaller k values produce more clusters. Optimal value depends on the dataset
+
+distance_metric : "euclidean" # what formula is used to calculate the distance between cells (kNN step).
+# options are 'euclidean', 'manhattan', 'correlation', or 'cosine'
+
+clustering_algo : "leiden" # what algorithm is used to form clusters
+# options are 'louvain' or 'leiden'

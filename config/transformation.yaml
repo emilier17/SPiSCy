@@ -1,0 +1,28 @@
+skip_FlowVS: # skip FlowVS prediction of cofactors.
+# Instead use already existing cofactors.csv (created by you or by predict_cofactors)
+  True
+
+arcsinh_cofactors: # cofactors to use for arcsinh transformation
+  # Leave empty to use cofactors in cofactors.csv (manually set by you, or created by predict_cofactors)
+  # Optional: manually set cofactors here (these will replace values from cofactors.csv)
+  CD4: 2500
+
+markers_to_transform: # list of markers to transform (must correspond to alias in channel_alias_map in general_config.yaml)
+  - "CD4"
+  - "CD3"
+  - "CD27"
+  - "CRTH2"
+  - "CD45RA"
+  - "CD127"
+  - "CCR6"
+  - "PD1"
+  - "CD161"
+  - "CTLA4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "ST2"
+
+downsample_size: # number of cells to sample per fcs file for plots
+  50000

@@ -1,0 +1,64 @@
+## for more information about diffcyt (the package used here to perform differential analysis)
+## see documentation https://rdrr.io/bioc/diffcyt/
+
+categorical_variables: # list of all variables in your experiment that are categorical
+# must correspond to column names in data/metadata.csv
+  - "participant"
+  - "stimulation"
+  - "treatment"
+  - "timepoint"
+
+####
+# Diffcyt can perform differential abundance (cluster size) and differential state (marker expression) analysis
+# Different statistical methods are available for differential abundance and differential state
+# Differential abundance methods: voom, edgeR, GLMM
+# Differential state methods: limma, LMM
+####
+
+diff_abundance_methods: # diffcyt offers 3 different methods for performing differential abundance analysis
+# options are: 'voom', 'edgeR', and 'GLMM'. None, 1, 2, or all methods can be specified
+# differential abundance compares cluster sizes
+ - "voom"
+ - "edgeR"
+ - "GLMM"
+
+diff_state_methods: # diffcyt offers 2 different methods for performing differential state analysis
+# options are: 'limma' and 'LMM'. None, 1 or all methods can be specified
+ - "limma"
+ - "LMM"
+
+####
+# To use methods voom, limma, and edgeR : a design matrix must be defined
+# To use methods GLMM and LMM : a model formula must be defined
+# Both can defined if all methods wish to be tested
+####
+
+design_matrix_columns: # column names from metadata.csv that should be used to build statistical model
+# Used for methods: voom, limma, and edgeR
+# include variables that describe the experimental design at the sample level
+# Typically includes variables you want to test (like treatment, outcome)
+# and variables to control for (like batch, participant/donor, replicate)
+# participant/donor/group ID is recommended when samples are paired or repeated
+  - "stimulation"
+  - "treatment"
+  - "timepoint"
+  - "participant"
+
+formula_variables: # variables to include in model formulas for GLMM or LMM tests
+# fixed: variables that define the main effects to be tested
+# random: variable that define groups or repeated measures
+  fixed: ["stimulation", "treatment", "timepoint"]
+  random: ["participant"]
+
+
+contrast_matrix_var: # what biological effect will be tested
+# each constrat matrix answers a different biological question
+# each element in the list corresponds to 1 statistical constrast (1 hypothesis test)
+# don't include variables that are used for pairing (ex participant ID) or columns that aren't in the design matrix
+  - "stimulation"
+  - "treatment"
+  - "timepoint"
+
+heatmap_viz: # diffcyt heatmap visualization parameters
+  top_n: 20 # number of top clusters (DA) or cluster-marker combinations (DS) to display
+  threshold: 0.05 #	threshold for significant adjusted p-values

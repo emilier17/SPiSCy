@@ -1,0 +1,77 @@
+## for more documentation about the dimensionality reduction methods used here, please see:
+# https://scikit-learn.org/stable/modules/manifold.html
+# https://scikit-learn.org/stable/modules/decomposition.html
+
+## Scalability considerations:
+# for < 5k cells ==> KernelPCA and Isomap work
+# millions cells ==> PCA, FastICA
+
+
+method_choice: "pca" # indicate which dimensionality reduction should be used before clustering
+# options are 'direct_markers', PCA', 'KernelPCA', 'Isomap', or 'FastICA'
+
+
+## Method choice configurations
+direct_markers: # list markers that should be used directly for clustering (will use the values as is)
+  - "CD4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "CD127"
+  - "CD45RA"
+  - "CD27"
+  - "CD161"
+
+PCA:
+  n_components: 4 # how many dimensions to reduce to (smaller than the number of markers to reduce)
+  markers_to_reduce: # on what markers should reduction be applied
+      - "CD4"
+      - "CD8"
+      - "CD154"
+      - "CD137"
+      - "CD25"
+      - "CD127"
+      - "CD45RA"
+      - "CD27"
+      - "CD161"
+
+KernelPCA: # Kernel PCA
+  n_components: 4 # how many dimensions to reduce to (smaller than the number of markers to reduce)
+  markers_to_reduce: # on what markers should reduction be applied
+     - "CD4"
+     - "CD8"
+     - "CD154"
+     - "CD137"
+     - "CD25"
+     - "CD127"
+     - "CD45RA"
+     - "CD27"
+     - "CD161"
+
+Isomap:
+  n_components: 4 # how many dimensions to reduce to (smaller than the number of markers to reduce)
+  n_neighbors: 5 # number of neighbors to consider for each point
+  markers_to_reduce: # on what markers should reduction be applied
+     - "CD4"
+     - "CD8"
+     - "CD154"
+     - "CD137"
+     - "CD25"
+     - "CD127"
+     - "CD45RA"
+     - "CD27"
+     - "CD161"
+
+FastICA:
+  n_components: 4 # how many dimensions to reduce to (smaller than the number of markers to reduce)
+  markers_to_reduce: # on what markers should reduction be applied
+     - "CD4"
+     - "CD8"
+     - "CD154"
+     - "CD137"
+     - "CD25"
+     - "CD127"
+     - "CD45RA"
+     - "CD27"
+     - "CD161"

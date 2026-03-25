@@ -1,0 +1,28 @@
+markers_to_evaluate: # list of channels that will be evaluated and corrected for quality.
+# Typically the list same markers as markers_to_transform in predict_cofactors.yaml
+  - "CD4"
+  - "CD3"
+  - "CD27"
+  - "CRTH2"
+  - "CD45RA"
+  - "CD127"
+  - "CCR6"
+  - "PD1"
+  - "CD161"
+  - "CTLA4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "ST2"
+
+criteria: "all"
+# on which basis PeacoQC will eliminate poor quality cells.
+# Options:
+# 'all' (use MAD and IT to remove poor quality cells), 
+# 'IT' (use only IT to remove poor quality cells),
+# 'MAD (use only MAD to remove poor quality cells)
+
+MAD: 7 # the bigger the value, the less strict the algorithm
+
+IT: 0.6 # value of IT to detect outliers. The bigger the value, the less strict the algorithm.

@@ -1,0 +1,12 @@
+# It is often not feasible to train a clustering algorithm on all the cells from a large dataset
+# So, clustering can be run on a smaller subset of the complete dataset
+
+selective_sampling: True
+# should sampling be performed using only certain files?
+# options are True or False
+# Useful for preserving rare cells by sampling from files that contain that rare population
+
+filename_keyword: "Peanut"
+# if selective_sampling==True, keyword present in every filename of samples to be sampled from
+# searches for exact matches  in every filename
+# the same sample_size_per_file number set above will be used to sample from the specific files

@@ -1,0 +1,30 @@
+sample_size: 300 # how many cells to sample from each fcs file to speed up umap calculation
+
+experimental_conditions: # use these conditions to color the umap to visualize a potential batch effect.
+# Must correspond to a column name in metadata.csv
+  - "batch"
+  - "group"
+  - "stimulation"
+  - "timepoint"
+  - "participant"
+
+umap_markers: # use these markers to generate the umap
+  - "CD3"
+  - "CD27"
+  - "CRTH2"
+  - "CD45RA"
+  - "CD127"
+  - "CCR6"
+  - "PD1"
+  - "CD161"
+  - "CTLA4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "ST2"
+  - "CD4"
+
+dataset_type: "both" # on which files to run the umap. Options are: "samples", "controls", "both"
+
+control_ID: "BATCH" # term present in the filename of every control file, if they exist

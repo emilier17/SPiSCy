@@ -1,0 +1,6 @@
+sample_size: 100 # number of cells to sample per cluster to view marker expression 
+
+sample_size_umap: 2000 # number of cells to sample per cluster for umap visualization
+
+umap_plot_centroids: True # for umap visualization of clustering results, also plot the centroid
+# of each cluster (corresponding to median marker values). Options: True or False

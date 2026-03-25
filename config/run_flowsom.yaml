@@ -1,0 +1,8 @@
+sample_size_per_file: 150000
+# how many cells to randomly sample form every file to create a smaller data subset to run clustering
+
+x_dims: 10 # number of dimensions of SOM grid for x axis. Number of clusters = x_dim * y_dim
+
+y_dims: 10 # number of dimensions of SOM grid for y axis. Number of clusters = x_dim * y_dim
+
+nb_metaclusters: 12 # number of metaclusters. Similar clusters are grouped together into metaclusters

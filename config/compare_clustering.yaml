@@ -1,0 +1,16 @@
+clustering_markers: # markers that will be used by calculating structural and biological metrics
+  - "CD4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "CD127"
+  - "CD45RA"
+  - "CD27"
+  - "CD161"
+
+sample_size_agreement: 50000 # number of cells to randomly sample from complete dataset
+# to estimate ARI (adjusted rand index) and AMI (adjusted mutual information)
+
+sample_size_silhouette: 50000 # number of cells to randomly sample from complete dataset
+# to estimate silhouette score

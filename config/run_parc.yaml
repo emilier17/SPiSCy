@@ -1,0 +1,9 @@
+sample_size_per_file: 10000 # how many cells from each file should be sampled to create a dataset on which to run phenograph
+
+jac_std_global: 0.20 # global level graph pruning.
+# Authors of PARC suggest a value of 0.15 could be helpful for rare populations
+# Options are: Usually set between 0.1 - 1. Default is 'median'. Higher values mean less pruning
+
+jac_weighted_edges: True # use or not Jaccard weighted pruned graph as input to Leiden community detection.
+# Authors of PARC suggest setting to 'False' to speed up computing if using large datasets
+# Options are: 'True' or 'False'

@@ -1,0 +1,49 @@
+skip_normalization: False # if the experiment was done in a single batch or no batch effect is present, then set to 'True'
+
+controls_exist: True # normalization works best if a technical replicate was run in every batch,
+# however, CytoNorm can be run without technical controls. Indicate here if technical replicates exist ('True') or not ('False')
+
+control_ID: "BATCH" # if a technical replicate was processed in every experiment batch,
+#then add a unique ID in those filenames to be able to differenciate them from biological samples
+
+nb_sampled_cells: 1000 # If controls_exist == False, how many cells should be sampled from
+# these cells will be aggregated into a single fcs file that acts as an artificial control
+
+markers_to_normalize: # list of markers that will be normalized using the CytoNorm model
+  - "CD4"
+  - "CD3"
+  - "CD27"
+  - "CRTH2"
+  - "CD45RA"
+  - "CD127"
+  - "CCR6"
+  - "PD1"
+  - "CD161"
+  - "CTLA4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "ST2"
+
+markers_for_clustering: # list of markers that will be used to cluster the cells in FlowSOM model.
+# Can be different from markers_to_normalize
+# Typically markers that reliably identify distinct groups of cells
+  - "CD4"
+  - "CD3"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "CD127"
+
+flowsom_parameters:
+  nb_cells_in_model: 1000000 # total number of cells to build model. Cells will be sampled from all fcs files
+  xdim: 15 # number of nodes in x axis. Number of clusters = x * y
+  ydim: 15 # number of nodes in y axis. Number of clusters = x * y
+  nb_metaclusters: 10 # number of cluster groupings. typically smaller than the number of metaclusters used downstream during real clustering
+
+normalization_parameters:
+  nQ: 99 #	number of quantiles that will be used to describe the data.
+  # For the default value of 99, 0.01 to 0.99 will be used.
+

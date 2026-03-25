@@ -1,0 +1,13 @@
+sample_size_per_file: 150000
+# how many cells to randomly sample form every file to create a smaller data subset to run clustering
+
+radius_threshold: 0.5 # maximum radius of a subclusters allowed after merging a new sample
+# Controls granularity: low values causes many small subclusters ; high values causes fewer bigger subclusters
+
+branching_factor: 50 # maximum number of subclusters allowed in each node of the clustering tree
+# Controls tree structure: when exceeded, the node is split. Doesn't directly affect number of subclusters
+
+nb_clusters: 10
+# options are 'None' or an integer (k)
+# if set to 'None': the subclustes are directly used
+# if set to k: scikit-learn's AgglomerativeClustering model is fit and k clusters are found

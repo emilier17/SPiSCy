@@ -1,0 +1,20 @@
+sample_size_per_file: 10000
+# how many cells to randomly sample form every file to create a smaller data subset to run clustering
+
+clustering_markers: # markers that will be used to separate the cells into clusters
+  - "CD4"
+  - "CD8"
+  - "CD154"
+  - "CD137"
+  - "CD25"
+  - "CD127"
+  - "CD45RA"
+  - "CD27"
+  - "CD161"
+
+nb_neighbors_clustering: 20 # how many cells in neighborhood to construct neareast neighbor graph, used as input for Leiden clustering
+
+sample_key: "participant" # parameter during model training to control for sample differences
+# column name from metadata that indicates which cell came from where (e.g from which donor)
+# leave blank if not needed
+# data is assumed to have no batch effect when training the model. 

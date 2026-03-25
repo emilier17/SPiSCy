@@ -1,0 +1,8 @@
+sample_size_per_file: 9000
+# how many cells to randomly sample form every file to create a smaller data subset to run clustering
+
+min_samples: 5 # value of k, calculate the distance between a cell and its k-th nearest neigbhor 
+# by default, set to the same value as min_cluster_size
+
+min_cluster_size: 7 # minimum number of cells in a group for that group to be considered a cluster.
+# groups smaller than this size will be considered as noise

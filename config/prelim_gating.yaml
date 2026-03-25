@@ -1,0 +1,34 @@
+gate_chains: # indicate the order of gates that will applied to each fcs file
+  default:
+    - debris
+    - singlets
+    - live
+
+gates:
+  debris: # same name as in gate_chains
+    filterId: "debris" # same name as in gate_chains
+    mk1: "FSC-A" # must correspond to alias in channel_alias_map (general_config.yaml)
+    mk2: "SSC-A" # optional second marker to plot
+    type: "rectangle" # gate type (options from flowcore are rectangle, polygon, ellipsoid, polytope, and quad)
+    coords:
+      mk1: [100000, 250000] # 
+      mk2: [25000, 150000]
+  
+  singlets:
+    filterId: "singlets"
+    mk1: "FSC-A"
+    mk2: "FSC-H"
+    type: "polygon"
+    coords:
+      - [50000, 25000]    # bottom left
+      - [400000, 230000]  # bottom right
+      - [350000, 275000]  # top right
+      - [50000, 110000]   # top left
+      - [50000, 25000]    # close polygon
+
+  live:
+    filterId: "live"
+    mk1: "FVS780"
+    type: "rectangle"
+    coords:
+      mk1: [-2000, 4000]

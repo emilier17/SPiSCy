@@ -1,0 +1,12 @@
+# If clustering is run on smaller subset of the complete dataset, then some cells will not have
+# been assigned to a cluster
+#
+# Label propagation allows to assign unsampled cells to a cluster
+# Based off NearestNeigbhor model and majority vote
+# Unlabeled cells first undergo the same dimensionality reduction as the sampled cells
+
+nb_neighbors: 10 # how many cell neighbors should be considered for NearestNeighbor model
+# typically between 5 - 30. Smaller values preserve rare populations better
+
+chunksize: 500000 # how many cells to process at once when assigning a cluster to unlabeled cells.
+# Depends on available memory

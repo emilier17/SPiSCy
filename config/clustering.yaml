@@ -1,0 +1,35 @@
+algorithms: # choose which clustering algorithms will be run on data. Can be just 1 or many
+# options are : 'flowsom', 'phenograph', 'parc', 'cytovi', 'hdbscan', 'birch'
+  - "phenograph"
+  - "flowsom"
+  - "phenograph"
+  - "parc"
+  - "cytovi"
+  - "hdbscan"
+  - "birch"
+
+## Algorithm details:
+# BIRCH (1996) : hierarchical centroid based
+# HDBSCAN (2013) : hierarchical density based 
+# FlowSOM (2015) : self-organizing maps + hierarchical consensus metaclustering
+# PhenoGraph (2015) : k nearest neigbhors + Jaccard Index + community detection (Leiden or Louvain)
+# PARC (2020) : kNN graph with HNSW + pruning + Leiden community detection
+# CytoVI (2022) : variational autoencoder (reduce dimensions) + Leiden community detection
+
+
+clustering_levels: # different algorithms produce different levels of clustering.
+# For QC and comparison rules, please indicate here which level of clustering should be used per algorithm
+  phenograph: ["cluster"]
+  flowsom: ["cluster", "metacluster"]
+  parc: ["cluster"]
+  cytovi: ["cluster"]
+  hdbscan: ["cluster"]
+  birch: ["cluster"]
+
+## Actual clustering levels per algorithm:
+# phenograph: ["cluster"]
+# flowsom: ["cluster", "metacluster"]
+# parc: ["cluster"]
+# cytovi: ["cluster"]
+# birch: ["cluster"]
+# hdbscan: ["cluster"]

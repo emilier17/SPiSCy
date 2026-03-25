@@ -1,0 +1,38 @@
+gate_chains: # gating sequence to select cells of interest
+  default:
+    - CD3
+    - CD4
+
+gates:
+  CD3: # must be same as in the list of gate_chains
+    filterId: "CD3" # must be same as in the list of gate_chains
+    mk1: "CD3" # must correspond to alias in channel_alias_map (general_config.yaml)
+    type: "rectangle" # gate type (options from flowcore are rectangle, polygon, ellipsoid, polytope, and quad)
+    coords:
+      mk1: [1.5, 4.5] # transformed values
+  CD4:
+    filterId: "CD4"
+    mk1: "CD4"
+    mk2: "CD8"
+    type: "rectangle"
+    coords:
+      mk1: [2, 4]
+      mk2: [-1, 2]
+
+validation_plots: # typical gates you would view manually to check marker distribution
+  - CD25_CD127
+  - CD154_CD137
+  - CD137_CD27
+
+validation:
+  CD25_CD127: # same as the name set in the list of validation_plots
+    mk1: "CD25" # marker to view on the x axis
+    mk2: "CD127" # marker to view on the y axis
+  CD154_CD137:
+    mk1: "CD154"
+    mk2: "CD137"
+  CD137_CD27:
+    mk1: "CD137"
+    mk2: "CD27"
+
+
