@@ -12,7 +12,7 @@ module load apptainer
 module load python/3.11
 
 # Activate Snakemake environment with slurm plugin
-source ~/envs/snakemake8/bin/activate
+source ~/path to your snakemake environment
 
 # Define how many jobs to run in parallel
 JOBS=100

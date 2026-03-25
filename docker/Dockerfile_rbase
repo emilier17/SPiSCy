@@ -1,0 +1,22 @@
+# Base image
+FROM condaforge/miniforge3:25.3.1-0
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy the environment file
+COPY docker/rbase.yaml ./rbase.yaml
+
+# Create the R conda environment
+RUN conda env create -f rbase.yaml --quiet --yes
+
+# Install packages not on conda (Here, Cytonorm from GitHub)
+RUN conda run -n rbase R -e "remotes::install_github('saeyslab/CytoNorm')"
+
+# Expose path
+ENV PATH=/opt/conda/envs/rbase/bin:$PATH
+
+# Clean up conda cache to reduce image size
+RUN conda clean -afy
+
+

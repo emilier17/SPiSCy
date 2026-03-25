@@ -1,0 +1,11 @@
+executor: slurm
+
+default-resources:
+    runtime: 60
+    mem_mb: 4000
+    slurm_account: "'your account name'"
+
+slurm-logdir: results/logs/slurm
+slurm-keep-successful-logs: True
+
+restart-times: 2

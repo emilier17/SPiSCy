@@ -1,0 +1,24 @@
+name: rbase
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.4.0
+  - r-ggplot2=3.5.1
+  - r-dplyr=1.1.4
+  - r-yaml=2.3.10
+  - r-ggridges=0.5.6
+  - r-ggpubr=0.6.0
+  - r-tidyr=1.3.1
+  - r-gridextra=2.3
+  - r-remotes=2.5.0
+  - r-umap
+  - bioconductor-flowcore=2.18.0
+  - bioconductor-flowviz=1.70.0
+  - bioconductor-flowvs=1.38.0
+  - bioconductor-peacoqc=1.16.0
+  - bioconductor-flowsom=2.14.0
+  - bioconductor-ggcyto=1.34.0
+  - bioconductor-diffcyt=1.26.0
+  - bioconda::snakemake

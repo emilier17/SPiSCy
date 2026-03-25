@@ -131,8 +131,47 @@ Differential analysis
 
 ### HPC
 
+1. Clone SPiSCy repo
+2. R and Python
+3. Download snakemake and snakemake slurm executor plugin
+4. Prepare data folder. All FCS files must be placed in the ```data/all_raw``` folder. 2 csv files must be placed in the ```data``` folder: ```metadata.csv``` and ```marker_info.csv```
+
+```metadata.csv``` must minimally contain a column called ```filename```, which lists all the FCS filenames present in ```data/all_raw```, without the .fcs extension. Here is an example of metadata.csv:
+![metadata.csv](images/metadata.jpg)
+
+
+```marker_info.csv``` must contain columns ```marker_name```, ```channel```, and ```marker_class```. In ```marker_class```, indicate if the marker is used for distinguishing stable cell populations (type) or if the marker is used to characterize cells (state). Here is an example of marker_info.csv:
+![marker_info.csv](images/marker_info.jpg)
+
+5. Adapt slurm profile and bash scripts
+6. Delete folders and files for Windows usage. You may delete the ```docker``` folder and the ```docker-compose.yaml``` file. 
+7. Customize config files. See [Customize configuration settings](#customize-configuration-settings). 
+
+
 ### Windows
 
+1. Clone the repository
+
+In your terminal, change the current working directory to the location where you want spiscy to be and run:
+
+```
+git clone https://github.com/emilier17/spiscy.git 
+```
+
+A directory called spiscy will be created in the current working directory. Change the working directory to spiscy. All next steps take place in this working directory. 
+```
+cd spiscy
+```
+3. Build the docker images. This will take several minutes. 
+```
+docker build -f docker/Dockerfile_rbase -t spiscy_rbase:1.0 .
+```
+```
+docker build -f docker/Dockerfile_pybase -t spiscy_pybase:1.0 .
+```
+4. Prepare the data folder. See step 4 in the HPC setup
+5. Delete folders and files for HPC usage. You may delete the folders ```apptainers``` and ```workflow/profiles```, as well as files ```master_spiscy.sh```, ```run_spiscy.sh```, and ```test_spiscy.sh```. 
+6. Customize config files. See [Customize configuration settings](#customize-configuration-settings) 
 
 
 ## Usage
@@ -141,7 +180,103 @@ Differential analysis
 
 Each rule has its own configuration file that should be customized. Each configuration file has extensive comments to help inform choices. The settings are spoken about in detail in the [video](placeholder). 
 
+[!IMPORTANT]
+> If using control files, make sure each control file has an identifying word in their filenames. Then make sure to write that control ID in ```config/normalization.yaml```. This setting allows to distinguish between sample and control files. 
+
+
+
 ### Launch the pipeline
+
+#### HPC
+
+1. Navigate to the spiscy folder
+2. Test the pipeline. You might need to change permissions to run the file:
+```
+./test_spiscy.sh
+```
+3. spiscy can either be run in a login node with:
+```
+./run_spiscy.sh
+```
+
+or submitted as a job with: 
+```
+sbatch master_spiscy.sh
+```
+
+Either way, SPiSCY will be able to automatically submit its own jobs to SLURM with automatic resource calculations. Running SPiSCY as a job itself allows SPiSCy to continue running if you are disconnected from the login node. 
+
+
+If the pipeline failed and shut down, then you need to unlock the spiscy folder before relaunching.
+1. Make sure spiscy is no longer running
+2. Navigate to the spiscy folder
+3. Activate your snakemake environment
+```
+source ~/path to your snakemake environment
+```
+4. Unlock the directory
+```
+snakemake -n --unlock
+```
+5. Relaunch spiscy
+
+
+#### Windows
+
+Preprocessing and differential analysis steps use the rbase container, while clustering steps use the pybase container. According to which steps you want run, you will need to activate the appropriate container, run the chosen rules, then close the container, and move on to the next steps in the other container. 
+
+1. Navigate to the spiscy folder
+2. Compose the appropriate container:
+```
+docker compose run rbase
+```
+
+or
+
+```
+docker compose run pybase
+```
+3. Activate the appropriate conda environment:
+```
+conda activate rbase
+```
+
+or
+
+```
+conda activate pybase
+```
+4. Test snakemake
+```
+snakemake -np
+```
+5. Run all appropriate rules for the chosen container. -j sets the number of cores. 
+
+To run all preprocessing steps:
+```
+snakemake -j 1 -p --until merge_csv
+``` 
+
+
+To run all clustering steps:
+```
+snakemake -j 1 -p --until split_clusters_by_filename
+``` 
+
+To run all differential analysis:
+```
+snakemake -j 1 -p --until diff_analysis
+``` 
+
+6. Stop the container:
+
+```
+exit
+```
+```
+docker compose down --remove-orphans
+```
+
 
 ### Monitor the pipeline: log files and intermediate results
 

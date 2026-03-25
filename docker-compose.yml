@@ -1,0 +1,26 @@
+services:
+  rbase:
+    image: spiscy_rbase:1.0
+    container_name: spiscy_rbase
+    working_dir: /usr/src/app
+    volumes:
+      - ./workflow:/usr/src/app/workflow
+      - ./config:/usr/src/app/config
+      - ./data:/usr/src/app/data
+      - ./results:/usr/src/app/results
+    stdin_open: true
+    tty: true
+    command: bash
+
+  pybase:
+    image: spiscy_pybase:1.0
+    container_name: spiscy_pybase
+    working_dir: /usr/src/app
+    volumes:
+      - ./workflow:/usr/src/app/workflow
+      - ./config:/usr/src/app/config
+      - ./data:/usr/src/app/data
+      - ./results:/usr/src/app/results
+    stdin_open: true
+    tty: true
+    command: bash
