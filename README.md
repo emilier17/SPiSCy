@@ -137,11 +137,11 @@ Differential analysis
 4. Prepare data folder. All FCS files must be placed in the ```data/all_raw``` folder. 2 csv files must be placed in the ```data``` folder: ```metadata.csv``` and ```marker_info.csv```
 
 ```metadata.csv``` must minimally contain a column called ```filename```, which lists all the FCS filenames present in ```data/all_raw```, without the .fcs extension. Here is an example of metadata.csv:
-![metadata.csv](images/metadata_csv.jpg)
+![metadata](images/metadata_csv.png)
 
 
 ```marker_info.csv``` must contain columns ```marker_name```, ```channel```, and ```marker_class```. In ```marker_class```, indicate if the marker is used for distinguishing stable cell populations (type) or if the marker is used to characterize cells (state). Here is an example of marker_info.csv:
-![marker_info.csv](images/marker_info_csv.jpg)
+![marker_info](images/marker_info_csv.png)
 
 5. Adapt slurm profile and bash scripts
 6. Delete folders and files for Windows usage. You may delete the ```docker``` folder and the ```docker-compose.yaml``` file. 
