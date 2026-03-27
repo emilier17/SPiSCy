@@ -4,7 +4,7 @@ from scripts.resources import (
     mins_split_samples, mins_split_clusters
     )
 
-container: "../../apptainers/spiscy_pybase.sif"
+container: f"{workflow.basedir}/../apptainers/spiscy_pybase.sif"
 
 
 rule run_flowsom:

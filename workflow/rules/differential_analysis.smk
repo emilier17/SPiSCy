@@ -1,6 +1,6 @@
 from scripts.resources import mem_for_diff_analysis, mins_diff_analysis
 
-container: "../../apptainers/spiscy_rbase.sif"
+container: f"{workflow.basedir}/../apptainers/spiscy_rbase.sif"
 
 rule diff_analysis:
     input:

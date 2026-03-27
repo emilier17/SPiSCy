@@ -177,12 +177,14 @@ Place all FCS files in ```data/all_raw``` folder.
 Place the following CSV files in ```data``` folder: ```metadata.csv``` and ```marker_info.csv```
 
 
-```metadata.csv``` must minimally contain a column called ```filename```, which lists all the FCS filenames present in ```data/all_raw```, without the .fcs extension. Here is an example of metadata.csv:
-![metadata](images/metadata_csv.png)
+```metadata.csv``` must minimally contain a column called ```filename```, which lists all the FCS filenames present in ```data/all_raw```, without the .fcs extension. Example:
+
+![metadata_csv_example](images/metadata_csv.png)
 
 
-```marker_info.csv``` must contain columns ```marker_name```, ```channel```, and ```marker_class```. In ```marker_class```, indicate if the marker is used for distinguishing stable cell populations (type) or if the marker is used to characterize cells (state). Here is an example of marker_info.csv:
-![marker_info](images/marker_info_csv.png)
+```marker_info.csv``` must contain columns ```marker_name```, ```channel```, and ```marker_class```. In ```marker_class```, indicate if the marker is used for distinguishing stable cell populations (type) or if the marker is used to characterize cells (state). Example:
+
+![marker_info_csv_example](images/marker_info_csv.png)
 
 5. Adapt slurm profile and bash scripts. 
 
@@ -190,7 +192,7 @@ Place the following CSV files in ```data``` folder: ```metadata.csv``` and ```ma
 In ```run_spiscy.sh```, ```test_spiscy.sh```, and ```master_spiscy.sh```, paste the complete path to the spiscy folder in the indicated spaces. 
 
 
-In ```run_spiscy.sh```, ```test_spiscy.sh```, make sure the path to the snakemake environment is correct if you chose a different path in step 3. 
+In ```run_spiscy.sh``` and ```test_spiscy.sh```, make sure the path to the snakemake environment is correct if you chose a different path in step 3. 
 
 
 In ```master_spiscy.sh```, adjust SBATCH parameters: account name, requested time, memory, and CPUs.

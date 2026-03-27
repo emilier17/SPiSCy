@@ -1,0 +1,138 @@
+### Main workflow entry point ###
+
+from snakemake.utils import min_version
+min_version("8.0")
+import glob
+import os
+import yaml
+
+# Load per-rule configs to dynamically create input/output in snakemake rules
+with open("config/prelim_gating.yaml") as f:
+    gate_config = yaml.safe_load(f)
+prelim_gating_sequence = gate_config["gate_chains"]["default"]
+
+with open("config/transformation.yaml") as f:
+    transformation_config = yaml.safe_load(f)
+MARKERS = transformation_config["markers_to_transform"]
+
+with open("config/secondary_gating.yaml") as f:
+    secondary_gating_config = yaml.safe_load(f)
+secondary_gating_sequence = secondary_gating_config["gate_chains"]["default"]
+validation_plots = secondary_gating_config["validation_plots"]
+
+with open("config/detect_batch_effect_before.yaml") as f:
+    detect_config = yaml.safe_load(f)
+exp_conditions_before = detect_config["experimental_conditions"]
+
+with open("config/detect_batch_effect_after.yaml") as f:
+    detect_config = yaml.safe_load(f)
+exp_conditions_after = detect_config["experimental_conditions"]
+
+with open("config/normalization.yaml") as f:
+    normalization_config = yaml.safe_load(f)
+skip_normalization = normalization_config["skip_normalization"]
+controls_exist = normalization_config["controls_exist"]
+control_ID = normalization_config["control_ID"]
+norm_markers = normalization_config["markers_to_normalize"]
+
+with open("config/clustering.yaml") as f:
+    clustering_config = yaml.safe_load(f)
+clustering_algos = clustering_config["algorithms"]
+clustering_levels = clustering_config["clustering_levels"]
+
+# create list of QC targets
+clustering_qc_targets = []
+for algorithm, levels in clustering_levels.items():
+    for level in levels:
+        clustering_qc_targets.append(f"results/clustering/{algorithm}/QC/{level}/batch_contribution.png")
+
+compare_clustering_target = []
+if len(clustering_algos) > 1:
+    compare_clustering_target = ["results/clustering/clustering_comparaison.pdf"]
+
+median_marker_csvs = []
+for algorithm, levels in clustering_levels.items():
+    for level in levels:
+        median_marker_csvs.append(
+            f"results/clustering/{algorithm}/QC/{level}/marker_expression_median.csv"
+        )
+
+diff_analysis_targets = []
+for algorithm, levels in clustering_levels.items():
+    for level in levels:
+        diff_analysis_targets.append(f"results/diff_analysis/{algorithm}/{level}/stats")
+
+
+
+# validate controls_exists
+if not isinstance(controls_exist, bool):
+    raise ValueError("In normalization.yaml, 'controls_exist' must be either True or False (not a string).")
+
+# Use external data directory (mounted at runtime) so docker that can save results outside of container
+DATA_DIR = "data/all_raw"
+
+# Find all raw fcs files to begin
+FCS = glob.glob(os.path.join(DATA_DIR, "*.fcs"))
+ALL_FILES = [os.path.splitext(os.path.basename(f))[0] for f in FCS]
+
+# Validate found files
+if not ALL_FILES:
+    raise FileNotFoundError(f"No FCS files found in {DATA_DIR}")
+
+# Define control/sample sets
+if controls_exist:
+    if not control_ID or not isinstance(control_ID, str) or not control_ID.strip():
+        raise ValueError(
+            "If 'controls_exist' is True, a 'control_ID' must be provided in normalization.yaml "
+            "and must be a substring present in every control filenames."
+        )
+
+    CONTROL_FILES = [s for s in ALL_FILES if control_ID in s]
+    SAMPLE_FILES = [s for s in ALL_FILES if s not in CONTROL_FILES]
+
+    if not CONTROL_FILES:
+        raise ValueError(
+            f"No control files found containing control_ID='{control_ID}'. "
+            "Check normalization.yaml and filenames under data/all_raw."
+        )
+
+    if not SAMPLE_FILES:
+        raise ValueError("All files were detected as controls, no samples remain for normalization.")
+
+else:
+    # No controls, all files will be treated as samples
+    CONTROL_FILES = []
+    SAMPLE_FILES = ALL_FILES
+
+
+print("Working directory:", os.getcwd())
+print(f"Found {len(ALL_FILES)} total FCS files.")
+print(f"Controls exist: {controls_exist}")
+print(f"Control ID: {control_ID}")
+print(f"Number of control files: {len(CONTROL_FILES)}")
+print(f"Number of sample files: {len(SAMPLE_FILES)}")
+
+
+# Include Snakemake pipeline rules
+include: "rules/preprocessing.smk"
+include: "rules/clustering.smk"
+include: "rules/differential_analysis.smk"
+
+
+# Global rule to run Snakemake pipeline
+rule all:
+    input:
+        expand("results/detect_batch_effect/before_umap_{condition}.png",condition=exp_conditions_before),
+        expand("results/detect_batch_effect/after_umap_{condition}.png", condition=exp_conditions_after),
+        "results/secondary_gating/cell_counts.csv",
+        "results/QC/PeacoQC_report.csv",
+        "results/normalization/testCV.png",
+        "results/secondary_gating/.cleanup_cell_counts.done",
+        "results/QC/.cleanup_qc_reports.done",
+        "results/csv/final_samples.csv",
+        expand("results/clustering/{algorithm}/{algorithm}_model.pkl", algorithm=clustering_algos),
+        clustering_qc_targets,
+        compare_clustering_target,
+        "results/diff_analysis/markers",
+        expand("results/diff_analysis/labels/{algorithm}", algorithm=clustering_algos),
+        diff_analysis_targets

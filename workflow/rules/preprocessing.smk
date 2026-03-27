@@ -2,7 +2,7 @@ from scripts.resources import mem_per_fcs, min_per_mb, mem_for_flowset, time_pre
 
 localrules: merge_counts, cleanup_cell_counts, merge_reports, cleanup_qc_reports, merge_csv
 
-container: "../../apptainers/spiscy_rbase.sif"
+container: f"{workflow.basedir}/../apptainers/spiscy_rbase.sif"
 
 
 rule prelim_gating:
