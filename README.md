@@ -1,25 +1,28 @@
 ## Get Started
 
-Read the documentation below, or watch the [SPiSCy Tour video](placeholder) for a detailed walkthrough. 
+| Text | Image |
+|------|-------|
+| Read the documentation below, or watch the [SPiSCy Tour video](placeholder) for a detailed walkthrough. | ![Logo](images/logo.png) |
+
 
 
 ## Overview
 
 SPiSCy (**S**nakemake **Pi**peline for **S**pectral **Cy**tometry) is a bioinformatic pipeline to fully analyze large spectral flow cytometry datasets. SPiSCy aims to be:
-- flexible, by having extensive custom configuration
-- reproducible, by having detailed logs
-- complete, by starting from raw FCS files and performing all steps for a full analysis
-- automatic, by using the workflow management system Snakemake
+- Flexible, by having extensive custom configuration
+- Reproducible, by having detailed logs
+- Complete, by starting from raw FCS files and performing all steps for a full analysis
+- Automatic, by using the workflow management system Snakemake
 
 
 ## Features
 
 Starting with FCS files from the cytometer, SPiSCy performs:
-- extensive data preprocessing (gating, transformation, QC, normalization)
-- dimensionality reduction (choice of 5 methods - PCA, KernelPCA, Isomap, FastICA, or direct markers)
-- clustering (choice of 6 methods - FlowSOM, PARC, PhenoGraph, BIRCH, CytoVI, or HDBSCAN)
-- comparaison between clustering results
-- differential analysis (abundance and marker expression)
+- Data preprocessing (gating, transformation, QC, normalization)
+- Dimensionality reduction (choice of 5 methods - PCA, KernelPCA, Isomap, FastICA, or direct markers)
+- Clustering (choice of 6 methods - FlowSOM, PARC, PhenoGraph, BIRCH, CytoVI, or HDBSCAN)
+- Comparaison between clustering results
+- Differential analysis (abundance and marker expression)
 
 All steps produce intermediate results and detailed log files that allow you to monitor the progress and success of each step.
 
@@ -40,7 +43,7 @@ SPiSCy is written in R and Python and uses Snakemake to automate the workflow. A
 Snakemake works by setting up rules that define how to create output files from input files. For more information about how Snakemake works, please see the official [documentation](https://snakemake.readthedocs.io/en/stable/). 
 
 
-SPiSCy is organized per official Snakemake recommendations:
+SPiSCy is organized as follows:
 
 ```
 .
@@ -106,7 +109,7 @@ Preprocessing
 
 
 Clustering
-- Time: depends on method and subsample size. 
+- Time varies per dimensionality reduction and clustering method. The execution times here include PCA dimensionality reduction, clustering and label propagagtion. 
     - FlowSOM: 10 min (clustering 13 million cells)
     - BIRCH: 14 min (clustering 13 million cells)
     - PARC: 25 min (clustering 950 000 cells)
@@ -426,3 +429,9 @@ Differential analysis (R 4.4.0)
 - [diffcyt](https://rdrr.io/bioc/diffcyt/) 1.26.0
 - [edger](https://bioconductor.org/packages/release/bioc/html/edgeR.html) 4.4.0
 - [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) 3.62.1
+
+
+
+## Acknowledgments
+
+SPiSCY logo: Éloïse Blais ([portfolio](https://www.artstation.com/esiole))
