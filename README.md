@@ -1,6 +1,6 @@
 ## Get Started
 
-<img src="images/logo.png" align="right width="250"/>|
+<img src="images/logo.png" align="right" width="250"/>
 
 Read the documentation below, or watch the [SPiSCy Tour video](placeholder) for a detailed walkthrough.
 
