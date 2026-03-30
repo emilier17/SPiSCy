@@ -182,7 +182,7 @@ Place the following CSV files in ```data``` folder: ```metadata.csv``` and ```ma
 
 ```metadata.csv``` must minimally contain a column called ```filename```, which lists all the FCS filenames present in ```data/all_raw```, without the .fcs extension. Example:
 
-![metadata_csv_example](images/metadata_csv.png)
+<img src="images/metadata_csv.png" width="600"/>
 
 
 ```marker_info.csv``` must contain columns ```marker_name```, ```channel```, and ```marker_class```. In ```marker_class```, indicate if the marker is used for distinguishing stable cell populations (type) or if the marker is used to characterize cells (state). Example:
