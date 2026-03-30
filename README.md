@@ -1,16 +1,10 @@
+<img src="images/logo.png" width="200"/>
+
+
 ## Get Started
 
-<table>
-  <tr>
-    <td style="padding-right: 20px;">
-      Read the documentation below, or watch the [SPiSCy Tour video](placeholder) for a detailed walkthrough.
-    </td>
-    <td valign="top">
-      <img src="images/logo.png" width="200"/>
-    </td>
-  </tr>
-</table>
 
+Read the documentation below, or watch the [SPiSCy Tour video](placeholder) for a detailed walkthrough.
 
 ## Overview
 
